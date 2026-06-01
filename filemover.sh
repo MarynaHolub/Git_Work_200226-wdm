@@ -49,8 +49,17 @@ for file in "${files[@]}"; do
     filename=$(basename "$file" ".$file_extension")
 
     cp "$file" "$target_directory/$filename.$new_file_extension"
-
-    echo "Скопирован файл: $(basename "$file") > $filename.$new_file_extension"
+    
+echo "Скопирован файл: $(basename "$file") > $filename.$new_file_extension"
 done
 
-# Архивация исходных файлов.
+#issue-7-archive
+archive_name="old_files_$(date +%Y-%m-%d).tar.gz"
+
+tar -czf "$target_directory/$archive_name" "$source_directory"/*."$file_extension"
+
+rm -f "$source_directory"/*."$file_extension"
+
+echo "Archive created: $target_directory/$archive_name"
+echo "Source files deleted"
+
